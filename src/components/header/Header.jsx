@@ -5,7 +5,7 @@ export const NavMenu = () => {
     <div>
       <Header>
         <NavItem to="/">Home</NavItem>
-        <NavItem to="views">Views</NavItem>
+        <NavItem to="movies">Views</NavItem>
       </Header>
       <Outlet />
     </div>

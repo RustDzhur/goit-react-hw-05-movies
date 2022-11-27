@@ -25,11 +25,6 @@ export const getDetailsOfMovie = movieId => {
   );
 };
 
-//Получить картинки фильма
-export const getImagesMovies = (path) => {
-  return axios.get(`https://image.tmdb.org/t/p/w500${path}`)
-}
-
 //Получить список актеров
 export const getMovieActors = movieId => {
   return axios.get(`
@@ -37,7 +32,7 @@ export const getMovieActors = movieId => {
 };
 
 //Ревью фильма
-export const getMovieReview = (movieId, page) => {
+export const getMovieReview = (movieId) => {
   return axios.get(`
-  https://api.themoviedb.org/3/movie/${movieId}/reviews?api_key=${options.api_key}&language=en-US&page=${page}`);
+  https://api.themoviedb.org/3/movie/${movieId}/reviews?api_key=${options.api_key}&language=en-US&page=1`);
 };

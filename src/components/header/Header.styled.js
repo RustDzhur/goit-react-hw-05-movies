@@ -5,8 +5,9 @@ export const Header = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  padding-left: 50px;
   height: 70px;
+  max-width: 1200px;
+  margin: 0 auto;
   background-color: #0093e9;
   background-image: linear-gradient(160deg, #0093e9 0%, #80d0c7 100%);
 `;
@@ -44,5 +45,13 @@ export const NavItem = styled(NavLink)`
 
   &:active {
     transform: scale(0.95);
+  }
+  &.active {
+    background-image: linear-gradient(
+    45deg,
+    #ff512f 0%,
+    #000000 51%,
+    #ffffff 100%
+  );
   }
 `;
