@@ -1,9 +1,28 @@
-
+import { useEffect } from 'react';
+import { useState } from 'react';
+import { NavLink,  } from 'react-router-dom';
+import { getTrendMovie } from '../Api/Api';
 
 export const Home = () => {
+  const [trendsMovie, setTrendsMovie] = useState(null);
+  useEffect(() => {
+    getTrendMovie().then(res => setTrendsMovie(res.data.results))
+  }, []);
+
+  if(!trendsMovie) {
+    return null
+  }
+
   return (
     <div>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste expedita voluptatum nobis! Magni, modi architecto voluptatem sunt aperiam nemo dolorum, minima ipsum consectetur provident culpa reiciendis eligendi sapiente exercitationem nobis?</p>
+        <ul>
+          {trendsMovie.map(({id, title}) => (
+            <li key={id}>
+              <NavLink to={`/views/${id}`}>{title}</NavLink>
+            </li>
+          ))}
+        </ul>
+        
     </div>
   );
 };
