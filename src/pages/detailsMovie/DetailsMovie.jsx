@@ -1,4 +1,5 @@
-import { useParams, useNavigate, Outlet } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { useParams, Outlet, useLocation, Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { getDetailsOfMovie } from '../../Api/Api';
 import {
@@ -10,13 +11,15 @@ import {
   NavItem,
   InfoBox,
 } from './DetailsMovie.styled';
+import notFoundImg from '../../images/notFoundImg.png';
+import NoFoundPage from 'pages/noFoundPage/NoFoundPage';
 
-
-export const DetailsMovie = () => {
+const DetailsMovie = () => {
   const [movieDetails, setMovieDetails] = useState(null);
-  const navigate = useNavigate();
+  const location = useLocation();
   const { id } = useParams();
-    
+  const backLink = location.state?.from ?? '/';
+
   useEffect(() => {
     getDetailsOfMovie(Number(id)).then(res => setMovieDetails(res.data));
   }, [id]);
@@ -34,16 +37,19 @@ export const DetailsMovie = () => {
     vote_average,
   } = movieDetails;
 
-  const goBack = () => navigate('/');
   return (
     <>
-      <DetailsBox>
-        <ImgPreview
-          src={`https://image.tmdb.org/t/p/w500${backdrop_path}`}
-          alt={original_title}
-        />
+      {movieDetails ? <DetailsBox>
+        {backdrop_path ? (
+          <ImgPreview
+            src={`https://image.tmdb.org/t/p/w500${backdrop_path}`}
+            alt={original_title}
+          />
+        ) : (
+          <ImgPreview src={notFoundImg} alt={original_title} />
+        )}
         <div>
-          <button onClick={goBack}>Go Back</button>
+          <Link to={backLink}>Go Back</Link>
           <h1>{title}</h1>
           <p>
             <b>Popularity: {vote_average}</b>
@@ -58,7 +64,7 @@ export const DetailsMovie = () => {
             </Genres>
           </div>
         </div>
-      </DetailsBox>
+      </DetailsBox> : <NoFoundPage/>}
 
       <InfoBox>
         <AddInfo>
@@ -66,9 +72,21 @@ export const DetailsMovie = () => {
         </AddInfo>
         <NavItem to="cast">Cast</NavItem>
         <NavItem to="reviews">Reviews</NavItem>
-        <Outlet/>
+        <Outlet />
       </InfoBox>
-      
     </>
   );
 };
+
+export default DetailsMovie;
+
+DetailsMovie.propTypes ={
+  movieDetails: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    overview: PropTypes.string.isRequired,
+    genres: PropTypes.object.isRequired,
+    backdrop_path: PropTypes.string.isRequired,
+    original_title: PropTypes.string.isRequired,
+    vote_average: PropTypes.number.isRequired,
+  })
+}

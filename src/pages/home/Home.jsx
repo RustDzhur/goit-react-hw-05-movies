@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
@@ -26,3 +27,10 @@ export const Home = () => {
     </ContainerBox>
   );
 };
+
+Home.propTypes = {
+  trendsMovie: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired,
+  })
+}

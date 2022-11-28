@@ -1,9 +1,11 @@
+import PropTypes from 'prop-types';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { getMovieReview } from 'Api/Api';
 import { useParams } from 'react-router-dom';
+import { Text } from './Reviews.styled';
 
-export const Reviews = () => {
+const Reviews = () => {
   const [reviews, setReviews] = useState([]);
   const { id } = useParams();
 
@@ -13,18 +15,28 @@ export const Reviews = () => {
 
   return (
     <>
-      <ul>
-        {reviews.map(({ id, content, author }) => (
-          <li key={id}>
-            <h3>Author: {author}</h3>
-            {reviews.length > 0 ? (
+      {reviews.length !== 0 ? (
+        <ul>
+          {reviews.map(({ id, content, author }) => (
+            <li key={id}>
+              <h3>Author: {author}</h3>
               <p>{content}</p>
-            ) : (
-              <p>There are no CONTENT, SORRY</p>
-            )}
-          </li>
-        ))}
-      </ul>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <Text>There are no CONTENT, SORRY</Text>
+      )}
     </>
   );
+};
+
+export default Reviews;
+
+Reviews.propTypes = {
+  reviews: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    content: PropTypes.string.isRequired,
+    author: PropTypes.string.isRequired,
+  }),
 };

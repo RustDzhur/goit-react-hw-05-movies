@@ -1,6 +1,6 @@
 import {BackGroundPage, TextError, NavItem} from './NoFoundPage.styled'
 
-export const NoFoundPage = () => {
+const NoFoundPage = () => {
   return (
     <BackGroundPage>
       <TextError>Page not found</TextError>
@@ -9,3 +9,5 @@ export const NoFoundPage = () => {
     </BackGroundPage>
   );
 };
+
+export default NoFoundPage
